@@ -6,8 +6,8 @@ An SQLite instance containing metadata and embeddings of RxRx1, RxRx2:
 
 - {doc}`/rxrx1-download`
 - {doc}`/rxrx1-register`
-- {doc}`/rxrx1-download`
-- {doc}`/rxrx1-register`
+- {doc}`/rxrx2-download`
+- {doc}`/rxrx2-register`
 
 ## `sunnyosun/rxrx1`
 
@@ -20,6 +20,7 @@ A BIG SQLite instance containing metadata, embeddings and each metadata annotate
 
 ```{toctree}
 :maxdepth: 1
+:hidden:
 
 01-download
 02-metadata
