@@ -1,1 +1,1 @@
-# rxrx1-lamin: Access RXRX1 data via LaminDB
+# rxrx-lamin: Search and Query RxRx data via LaminDB
