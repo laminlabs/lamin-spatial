@@ -4,7 +4,7 @@
 
 An SQLite instance containing metadata and embeddings of RxRx1, RxRx2:
 
-- {doc}`/search-query`
+- {doc}`/query-rxrx`
 - {doc}`/rxrx1-download`
 - {doc}`/rxrx1-register`
 - {doc}`/rxrx2-download`
@@ -31,5 +31,5 @@ rxrx1-download
 rxrx1-register
 rxrx2-download
 rxrx2-register
-search-query
+query-rxrx
 ```

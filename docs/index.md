@@ -7,6 +7,7 @@
 :maxdepth: 1
 :hidden:
 
+rxrx
 notebooks
 reference
 changelog
