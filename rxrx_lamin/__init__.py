@@ -1,8 +1,8 @@
-"""Access RXRX1 data via LaminDB.
+"""Search and query RxRx data via LaminDB.
 
 Import the package::
 
-   import rxrx1_lamin
+   import rxrx_lamin
 
 """
 

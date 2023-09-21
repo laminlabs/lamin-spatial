@@ -1,5 +1,5 @@
 # Reference
 
 ```{eval-rst}
-.. automodule:: rxrx1_lamin
+.. automodule:: rxrx_lamin
 ```

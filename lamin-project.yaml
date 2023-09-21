@@ -1,5 +1,5 @@
-project_name: rxrx1-lamin
-description: Access RXRX1 data via LaminDB
-project_slug: rxrx1-lamin
-repository_name: rxrx1-lamin
-package_name: rxrx1_lamin
+project_name: rxrx-lamin
+description: Search and query RxRx data via LaminDB
+project_slug: rxrx-lamin
+repository_name: rxrx-lamin
+package_name: rxrx_lamin
