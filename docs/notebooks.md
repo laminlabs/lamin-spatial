@@ -19,4 +19,5 @@ rxrx
 02-meta-rxrx1
 03-meta-rxrx2
 04-images-rxrx1
+images-rxrx1-original
 ```
