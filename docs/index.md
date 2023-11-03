@@ -9,6 +9,5 @@
 
 rxrx
 notebooks
-reference
 changelog
 ```

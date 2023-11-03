@@ -39,8 +39,7 @@ repos:
       - id: nbstripout
         exclude: |
           (?x)(
-              docs/|
-              docs/notes/
+              docs/notebooks/
           )
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.1.9
