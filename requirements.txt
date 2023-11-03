@@ -1,0 +1,7 @@
+lnschema-lamin1@git+https://github.com/laminlabs/lnschema-lamin1
+gcsfs
+pre-commit
+nox
+pytest>=6.0
+pytest-cov
+nbproject_test
