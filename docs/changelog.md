@@ -3,6 +3,7 @@
 <!-- prettier-ignore -->
 Name | PR | Developer | Date | Version
 --- | --- | --- | --- | ---
+♻️ Refactor repository | [5](https://github.com/laminlabs/rxrx-lamin/pull/5) | [falexwolf](https://github.com/falexwolf) | 2023-11-03 |
 ♻️ Keep only laminlabs/rxrx | [4](https://github.com/laminlabs/rxrx-lamin/pull/4) | [sunnyosun](https://github.com/sunnyosun) | 2023-10-06 |
 ✨ Add duckdb queries | [3](https://github.com/laminlabs/rxrx1-lamin/pull/3) | [sunnyosun](https://github.com/sunnyosun) | 2023-09-21 |
 🍱 Added rxrx1-2 instance | [2](https://github.com/laminlabs/rxrx1-lamin/pull/2) | [sunnyosun](https://github.com/sunnyosun) | 2023-09-19 |
