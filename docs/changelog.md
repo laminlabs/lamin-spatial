@@ -3,6 +3,7 @@
 <!-- prettier-ignore -->
 Name | PR | Developer | Date | Version
 --- | --- | --- | --- | ---
+📝 Polish | [7](https://github.com/laminlabs/rxrx-lamin/pull/7) | [falexwolf](https://github.com/falexwolf) | 2023-11-14 |
 ♻️  Re-curate part 1 | [6](https://github.com/laminlabs/rxrx-lamin/pull/6) | [falexwolf](https://github.com/falexwolf) | 2023-11-06 |
 ♻️ Refactor repository | [5](https://github.com/laminlabs/rxrx-lamin/pull/5) | [falexwolf](https://github.com/falexwolf) | 2023-11-03 |
 ♻️ Keep only laminlabs/rxrx | [4](https://github.com/laminlabs/rxrx-lamin/pull/4) | [sunnyosun](https://github.com/sunnyosun) | 2023-10-06 |
