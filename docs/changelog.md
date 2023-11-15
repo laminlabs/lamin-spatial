@@ -3,6 +3,7 @@
 <!-- prettier-ignore -->
 Name | PR | Developer | Date | Version
 --- | --- | --- | --- | ---
+♻️ Polish and re-run registration of rxrx1 images | [8](https://github.com/laminlabs/rxrx-lamin/pull/8) | [falexwolf](https://github.com/falexwolf) | 2023-11-15 |
 📝 Polish | [7](https://github.com/laminlabs/rxrx-lamin/pull/7) | [falexwolf](https://github.com/falexwolf) | 2023-11-14 |
 ♻️  Re-curate part 1 | [6](https://github.com/laminlabs/rxrx-lamin/pull/6) | [falexwolf](https://github.com/falexwolf) | 2023-11-06 |
 ♻️ Refactor repository | [5](https://github.com/laminlabs/rxrx-lamin/pull/5) | [falexwolf](https://github.com/falexwolf) | 2023-11-03 |
