@@ -1,6 +1,6 @@
 import nox
 from laminci import upload_docs_artifact
-from laminci.nox import build_docs, login_testuser1, run_pre_commit
+from laminci.nox import build_docs, login_testuser1, run_pre_commit, run_pytest
 
 nox.options.default_venv_backend = "none"
 
@@ -10,15 +10,20 @@ def lint(session: nox.Session) -> None:
     run_pre_commit(session)
 
 
-@nox.session()
+@nox.session
+def install(session: nox.Session):
+    session.run(*"pip install .[dev]".split())
+    session.run(
+        "pip",
+        "install",
+        "lamindb[jupyter,bionty,aws,postgres] @"
+        " git+https://github.com/laminlabs/lamindb@main",
+    )
+
+
+@nox.session
 def build(session):
-    session.run(*"pip install -r requirements.txt".split())
-    # session.run(
-    #     "pip",
-    #     "install",
-    #     "lamindb @ git+https://github.com/laminlabs/lamindb@main",
-    # )
     login_testuser1(session)
-    session.run(*"pytest -s tests".split())
-    build_docs(session, strict=True)
+    run_pytest(session, coverage=False)
+    build_docs(session, strip_prefix=True, strict=True)
     upload_docs_artifact(aws=True)
