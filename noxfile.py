@@ -19,6 +19,12 @@ def install(session: nox.Session):
         "lamindb[jupyter,bionty,aws,postgres] @"
         " git+https://github.com/laminlabs/lamindb@main",
     )
+    session.run(
+        "pip",
+        "install",
+        "--no-deps",
+        "lnschema-lamin1 @ git+https://github.com/laminlabs/lnschema-lamin1@main",
+    )
 
 
 @nox.session
