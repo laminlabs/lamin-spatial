@@ -1,0 +1,30 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "rxrx_lamin"
+authors = [{name = "Lamin Labs", email = "laminlabs@gmail.com"}]
+readme = "README.md"
+dynamic = ["version", "description"]
+dependencies = []
+
+[project.urls]
+Home = "https://github.com/laminlabs/rxrx-lamin"
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "nox",
+    "pytest>=6.0",
+    "pytest-cov",
+    "nbproject_test",
+]
+
+[tool.black]
+preview = true
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
