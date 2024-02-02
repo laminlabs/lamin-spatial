@@ -3,6 +3,7 @@
 <!-- prettier-ignore -->
 Name | PR | Developer | Date | Version
 --- | --- | --- | --- | ---
+💚 Fix CI | [11](https://github.com/laminlabs/rxrx-lamin/pull/11) | [sunnyosun](https://github.com/sunnyosun) | 2024-02-02 |
 🚚 Rename dataset to collection | [10](https://github.com/laminlabs/rxrx-lamin/pull/10) | [sunnyosun](https://github.com/sunnyosun) | 2024-01-08 |
 💄 Show an image | [9](https://github.com/laminlabs/rxrx-lamin/pull/9) | [sunnyosun](https://github.com/sunnyosun) | 2023-12-04 |
 ♻️ Polish and re-run registration of rxrx1 images | [8](https://github.com/laminlabs/rxrx-lamin/pull/8) | [falexwolf](https://github.com/falexwolf) | 2023-11-15 |
