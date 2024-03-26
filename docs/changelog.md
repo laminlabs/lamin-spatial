@@ -3,6 +3,7 @@
 <!-- prettier-ignore -->
 Name | PR | Developer | Date | Version
 --- | --- | --- | --- | ---
+♻️ Refactor repo | [13](https://github.com/laminlabs/lamin-spatial/pull/13) | [falexwolf](https://github.com/falexwolf) | 2024-03-26 |
 💚 Fix CI | [11](https://github.com/laminlabs/rxrx-lamin/pull/11) | [sunnyosun](https://github.com/sunnyosun) | 2024-02-02 |
 🚚 Rename dataset to collection | [10](https://github.com/laminlabs/rxrx-lamin/pull/10) | [sunnyosun](https://github.com/sunnyosun) | 2024-01-08 |
 💄 Show an image | [9](https://github.com/laminlabs/rxrx-lamin/pull/9) | [sunnyosun](https://github.com/sunnyosun) | 2023-12-04 |
