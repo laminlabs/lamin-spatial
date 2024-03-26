@@ -1,4 +1,5 @@
 wetlab@git+https://github.com/laminlabs/wetlab
+nbproject
 s3fs
 gcsfs
 pre-commit
