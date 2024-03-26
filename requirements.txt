@@ -1,0 +1,8 @@
+wetlab@git+https://github.com/laminlabs/wetlab
+s3fs
+gcsfs
+pre-commit
+nox
+pytest>=6.0
+pytest-cov
+nbproject_test
