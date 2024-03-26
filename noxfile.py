@@ -11,23 +11,6 @@ def lint(session: nox.Session) -> None:
 
 
 @nox.session
-def install(session: nox.Session):
-    session.run(*"pip install .[dev]".split())
-    session.run(
-        "pip",
-        "install",
-        "lamindb[jupyter,bionty,aws,postgres] @"
-        " git+https://github.com/laminlabs/lamindb@main",
-    )
-    session.run(
-        "pip",
-        "install",
-        "--no-deps",
-        "lnschema-lamin1 @ git+https://github.com/laminlabs/lnschema-lamin1@main",
-    )
-
-
-@nox.session
 def build(session):
     session.run(
         "uv",
