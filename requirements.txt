@@ -1,4 +1,4 @@
-lnschema-lamin1@git+https://github.com/laminlabs/lnschema-lamin1
+wetlab@git+https://github.com/laminlabs/wetlab
 s3fs
 gcsfs
 pre-commit
