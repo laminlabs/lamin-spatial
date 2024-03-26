@@ -1,10 +1,6 @@
 import nox
 from laminci import upload_docs_artifact
-<<<<<<< HEAD
 from laminci.nox import build_docs, run_pre_commit
-=======
-from laminci.nox import build_docs, login_testuser1, run_pre_commit, run_pytest
->>>>>>> 7ee4628 (💚 Fix CI (#11))
 
 nox.options.default_venv_backend = "none"
 
