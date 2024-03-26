@@ -17,7 +17,7 @@ def build(session):
         "pip",
         "install",
         "--system",
-        "lamindb_setup @ git+https://github.com/laminlabs/lamindb_setup@gcp",
+        "lamindb_setup @ git+https://github.com/laminlabs/lamindb-setup@gcp",
     )
     session.run(
         "uv",
