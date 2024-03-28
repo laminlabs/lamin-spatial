@@ -24,7 +24,7 @@ def build(session):
         "pip",
         "install",
         "--system",
-        "lamindb @ git+https://github.com/laminlabs/lamindb@spatial",
+        "lamindb @ git+https://github.com/laminlabs/lamindb@vitessce",
     )
     session.run(*"uv pip install --system -r requirements.txt".split())
     session.run(*"pytest -s tests".split())
