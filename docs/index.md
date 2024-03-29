@@ -8,6 +8,7 @@
 :hidden:
 
 rxrx
+vitessce
 notebooks
 changelog
 ```
