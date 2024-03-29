@@ -7,3 +7,5 @@ nox
 pytest>=6.0
 pytest-cov
 nbproject_test
+vitessce
+starlette  # for vitessce
