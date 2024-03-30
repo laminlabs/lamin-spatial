@@ -17,14 +17,14 @@ def build(session):
         "pip",
         "install",
         "--system",
-        "lamindb_setup @ git+https://github.com/laminlabs/lamindb-setup",
+        "lamindb_setup @ git+https://github.com/laminlabs/lamindb-setup@main",
     )
     session.run(
         "uv",
         "pip",
         "install",
         "--system",
-        "lamindb @ git+https://github.com/laminlabs/lamindb",
+        "lamindb @ git+https://github.com/laminlabs/lamindb@main",
     )
     session.run(*"uv pip install --system -r requirements.txt".split())
     login_testuser1(session)
