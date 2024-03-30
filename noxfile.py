@@ -17,16 +17,16 @@ def build(session):
         "pip",
         "install",
         "--system",
-        "lamindb_setup @ git+https://github.com/laminlabs/lamindb-setup@main",
+        "lamindb @ git+https://github.com/laminlabs/lamindb@main",
     )
+    session.run(*"uv pip install --system -r requirements.txt".split())
     session.run(
         "uv",
         "pip",
         "install",
         "--system",
-        "lamindb @ git+https://github.com/laminlabs/lamindb@main",
+        "lamindb_setup @ git+https://github.com/laminlabs/lamindb-setup@main",
     )
-    session.run(*"uv pip install --system -r requirements.txt".split())
     login_testuser1(session)
     session.run(*"pytest -s tests".split())
     build_docs(session, strict=True)
