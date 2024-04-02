@@ -3,6 +3,7 @@
 <!-- prettier-ignore -->
 Name | PR | Developer | Date | Version
 --- | --- | --- | --- | ---
+📝 Simplify vitessce tutorial | [15](https://github.com/laminlabs/lamin-spatial/pull/15) | [sunnyosun](https://github.com/sunnyosun) | 2024-04-02 |
 🍱 Add a vitessce example | [14](https://github.com/laminlabs/lamin-spatial/pull/14) | [falexwolf](https://github.com/falexwolf) | 2024-03-29 |
 ♻️ Refactor repo | [13](https://github.com/laminlabs/lamin-spatial/pull/13) | [falexwolf](https://github.com/falexwolf) | 2024-03-26 |
 💚 Fix CI | [11](https://github.com/laminlabs/rxrx-lamin/pull/11) | [sunnyosun](https://github.com/sunnyosun) | 2024-02-02 |
