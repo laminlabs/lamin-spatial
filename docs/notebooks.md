@@ -5,4 +5,5 @@
 :glob:
 
 notebooks/*
+static/*
 ```
