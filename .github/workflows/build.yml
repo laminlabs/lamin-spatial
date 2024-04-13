@@ -53,7 +53,7 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
         with:
-          channel: lamindb-tests
+          channel: mirror-github-actions-lamindb
           status: SUCCESS
           color: good
       - uses: voxmedia/github-action-slack-notify-build@v1
@@ -61,7 +61,7 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
         with:
-          channel: lamindb-tests
+          channel: mirror-github-actions-lamindb
           status: FAILURE
           color: danger
       - uses: nwtgck/actions-netlify@v1.2
