@@ -113,3 +113,4 @@ docs/rxrx1/
 docs/*.png
 *.zarr/
 *.h5ad
+*.h5mu
