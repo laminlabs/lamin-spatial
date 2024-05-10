@@ -1,1 +1,1 @@
-# rxrx-lamin: Search and Query RxRx data via LaminDB
+# `lamin-spatial`: LaminDB examples for spatial data
