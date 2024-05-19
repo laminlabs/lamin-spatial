@@ -3,6 +3,7 @@
 <!-- prettier-ignore -->
 Name | PR | Developer | Date | Version
 --- | --- | --- | --- | ---
+♻️ Fixes for lamindb 0.72 | [17](https://github.com/laminlabs/lamin-spatial/pull/17) | [falexwolf](https://github.com/falexwolf) | 2024-05-19 |
 ♻️ Separate `VitessceConfig` from its referenced datasets | [16](https://github.com/laminlabs/lamin-spatial/pull/16) | [falexwolf](https://github.com/falexwolf) | 2024-04-19 |
 📝 Simplify vitessce tutorial | [15](https://github.com/laminlabs/lamin-spatial/pull/15) | [sunnyosun](https://github.com/sunnyosun) | 2024-04-02 |
 🍱 Add a vitessce example | [14](https://github.com/laminlabs/lamin-spatial/pull/14) | [falexwolf](https://github.com/falexwolf) | 2024-03-29 |
