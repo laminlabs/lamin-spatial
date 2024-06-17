@@ -3,6 +3,7 @@
 <!-- prettier-ignore -->
 Name | PR | Developer | Date | Version
 --- | --- | --- | --- | ---
+🚧 Refactor rxrx guide | [19](https://github.com/laminlabs/lamin-spatial/pull/19) | [falexwolf](https://github.com/falexwolf) | 2024-06-17 |
 👷 Run against lamin-dev | [18](https://github.com/laminlabs/lamin-spatial/pull/18) | [falexwolf](https://github.com/falexwolf) | 2024-06-06 |
 ♻️ Fixes for lamindb 0.72 | [17](https://github.com/laminlabs/lamin-spatial/pull/17) | [falexwolf](https://github.com/falexwolf) | 2024-05-19 |
 ♻️ Separate `VitessceConfig` from its referenced datasets | [16](https://github.com/laminlabs/lamin-spatial/pull/16) | [falexwolf](https://github.com/falexwolf) | 2024-04-19 |
