@@ -9,3 +9,4 @@ pytest-cov
 nbproject_test
 vitessce
 starlette  # for vitessce
+duckdb
