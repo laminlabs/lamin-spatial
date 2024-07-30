@@ -3,6 +3,7 @@
 <!-- prettier-ignore -->
 Name | PR | Developer | Date | Version
 --- | --- | --- | --- | ---
+🚚 Rename Treatment to GeneticTreatment | [21](https://github.com/laminlabs/lamin-spatial/pull/21) | [sunnyosun](https://github.com/sunnyosun) | 2024-07-30 |
 🎨 Fix rxrx1 ingest | [20](https://github.com/laminlabs/lamin-spatial/pull/20) | [sunnyosun](https://github.com/sunnyosun) | 2024-07-30 |
 🚧 Refactor rxrx guide | [19](https://github.com/laminlabs/lamin-spatial/pull/19) | [falexwolf](https://github.com/falexwolf) | 2024-06-17 |
 👷 Run against lamin-dev | [18](https://github.com/laminlabs/lamin-spatial/pull/18) | [falexwolf](https://github.com/falexwolf) | 2024-06-06 |
