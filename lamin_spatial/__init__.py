@@ -1,8 +1,8 @@
-"""Manage RxRx metadata using LaminDB.
+"""Manage Spatial data using LaminDB.
 
 Import the package::
 
-   import rxrx_lamin
+   import lamin_spatial
 
 """
 
