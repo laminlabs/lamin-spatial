@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: laminlabs/lndocs
-          token: ${{ secrets.GH_LAMIN_BUILD_DOCS }}
+          ssh-key: ${{ secrets.READ_LNDOCS }}
           path: lndocs
           ref: main
       - uses: actions/setup-python@v4
