@@ -20,9 +20,9 @@ def lint(session: nox.Session) -> None:
 @nox.session
 def build(session):
     install_lamindb(session, branch="release", extras="bionty,aws,jupyter")
-    run(session, *f"uv pip install {SYSTEM} wetlab findrefs vitessce starlette")
+    run(session, f"uv pip install {SYSTEM} wetlab findrefs vitessce starlette")
     run(session, f"uv pip install {SYSTEM} .[dev]")
     login_testuser1(session)
-    run(session, *"pytest -s tests".split())
+    run(session, "pytest -s tests")
     build_docs(session, strict=True)
     upload_docs_artifact(aws=True)
