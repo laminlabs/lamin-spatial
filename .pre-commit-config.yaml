@@ -20,6 +20,7 @@ repos:
       - id: nbstripout
         exclude: |
           (?x)(
+              docs/static/|
               docs/examples/|
               docs/notes/
           )
