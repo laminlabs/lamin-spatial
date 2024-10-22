@@ -1,6 +1,13 @@
 import nox
 from laminci import upload_docs_artifact
-from laminci.nox import build_docs, install_lamindb, login_testuser1, run_pre_commit
+from laminci.nox import (
+    SYSTEM,
+    build_docs,
+    install_lamindb,
+    login_testuser1,
+    run,
+    run_pre_commit,
+)
 
 nox.options.default_venv_backend = "none"
 
@@ -13,8 +20,9 @@ def lint(session: nox.Session) -> None:
 @nox.session
 def build(session):
     install_lamindb(session, branch="release", extras="bionty,aws,jupyter")
-    session.run(*"uv pip install --system wetlab findrefs vitessce starlette".split())
+    run(session, *f"uv pip install {SYSTEM} wetlab findrefs vitessce starlette".split())
+    run(session, f"uv pip install {SYSTEM} .[dev]")
     login_testuser1(session)
-    session.run(*"pytest -s tests".split())
+    run(session, *"pytest -s tests".split())
     build_docs(session, strict=True)
     upload_docs_artifact(aws=True)
