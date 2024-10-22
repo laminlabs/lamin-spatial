@@ -20,6 +20,14 @@ dev = [
     "pytest-cov",
     "nbproject_test",
 ]
+use_case = [
+    "wetlab",
+    "findrefs",
+    "vitessce",
+    "starlette",
+    "duckdb",
+    "s3fs>=2024.10.0"  # gets downgraded by vitessce/starlette but needs to be recent
+]
 
 [tool.pytest.ini_options]
 testpaths = [
