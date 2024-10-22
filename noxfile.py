@@ -22,7 +22,7 @@ def build(session):
     install_lamindb(session, branch="release", extras="bionty,aws,gcp,jupyter")
     run(
         session,
-        f"uv pip install {SYSTEM} wetlab findrefs vitessce starlette s3fs>=2024.10.0",
+        f"uv pip install {SYSTEM} wetlab findrefs vitessce starlette duckdb s3fs>=2024.10.0",
     )
     run(session, f"uv pip install {SYSTEM} .[dev]")
     login_testuser1(session)
