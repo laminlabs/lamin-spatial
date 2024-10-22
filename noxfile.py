@@ -1,6 +1,6 @@
 import nox
 from laminci import upload_docs_artifact
-from laminci.nox import build_docs, login_testuser1, run_pre_commit, install_lamindb
+from laminci.nox import build_docs, install_lamindb, login_testuser1, run_pre_commit
 
 nox.options.default_venv_backend = "none"
 
