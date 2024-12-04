@@ -114,4 +114,9 @@ docs/*.png
 *.zarr/
 *.h5ad
 *.h5mu
+*.reference.json
+*.offsets.json
+*.ome.tif
+*.ome.tiff
+*.zarr.zip
 test-rxrx/
