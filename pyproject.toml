@@ -4,13 +4,13 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "lamin_spatial"
-authors = [{name = "Lamin Labs", email = "laminlabs@gmail.com"}]
+authors = [{name = "Lamin Labs", email = "open-source@lamin.ai"}]
 readme = "README.md"
 dynamic = ["version", "description"]
 dependencies = []
 
 [project.urls]
-Home = "https://github.com/laminlabs/rxrx-lamin"
+Home = "https://github.com/laminlabs/lamin-spatial"
 
 [project.optional-dependencies]
 dev = [
@@ -22,7 +22,7 @@ dev = [
 ]
 use_case = [
     "wetlab",
-    "findrefs",
+    "ourprojects",
     "vitessce",
     "starlette",
     "duckdb",
