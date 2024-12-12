@@ -1,3 +1,4 @@
+import random
 from typing import Any, Iterable, MutableMapping
 
 import lamindb_setup as ln_setup
@@ -80,8 +81,10 @@ class SpatialDataCurator:
         self._sdata = sdata
         self._kwargs = {"organism": organism} if organism else {}
         self._var_fields = var_index
-        self._verify_accessor(self._var_fields.keys())
-        self._categoricals = categoricals  # TODO Verify existence and no overlap
+        # TODO we should properly check for sample. This currently fails because we hard coded spatialdata-db as the attrs key
+        self._verify_accessor(self._var_fields.keys() - {"sample"})
+        # TODO consider splitting this up into two types of keys -> sap: for sample and tab: for table stuff
+        self._categoricals = categoricals
         self._tables = set(self._var_fields.keys()) | set(
             self._categoricals.keys() - {"sample"}
         )
@@ -91,6 +94,7 @@ class SpatialDataCurator:
         self._sample_metadata = self._sdata.get_attrs(
             key="spatialdata-db", return_as="df", flatten=True
         )  # this key will need to be adapted in the future
+        self._validated = False
 
         if "sample" in self._categoricals.keys():
             self._sample_df_curator = DataFrameCurator(
@@ -139,10 +143,14 @@ class SpatialDataCurator:
     def _verify_accessor(self, accessors: Iterable[str]):
         """Verify that the accessors exist."""
         for acc in accessors:
-            if (
-                self._sdata.get_attrs(key=acc) is None
-                and acc not in self._sdata.tables.keys()
-            ):
+            is_present = False
+            try:
+                self._sdata.get_attrs(key=acc)
+                is_present = True
+            except KeyError:
+                if acc in self._sdata.tables.keys():
+                    is_present = True
+            if not is_present:
                 raise ValidationError(f"Accessor '{acc} does not exist!")
 
     def lookup(
@@ -169,7 +177,7 @@ class SpatialDataCurator:
             self._sample_df_curator._update_registry_all(
                 validated_only=True, **self._kwargs
             )
-        for _, adata_curator in self._mod_adata_curators.items():
+        for _, adata_curator in self._table_adata_curators.items():
             adata_curator._update_registry_all(validated_only=True, **self._kwargs)
 
     def add_new_from_var_index(self, table: str, organism: str | None = None, **kwargs):
@@ -219,7 +227,7 @@ class SpatialDataCurator:
 
         Inplace modification of the dataset.
         """
-        if accessor in self._table_adata_curators:
+        if accessor in self._table_adata_curators.keys():
             adata_curator = self._table_adata_curators[accessor]
             adata_curator.standardize(key=key)
         if accessor == "sample":
@@ -258,7 +266,7 @@ class SpatialDataCurator:
 
         obs_validated = True
         if self._sample_df_curator:
-            logger.info('validating categoricals of "sample" metadata...')
+            logger.info("validating categoricals of 'sample' metadata...")
             obs_validated &= self._sample_df_curator.validate(**self._kwargs)
             self._non_validated["obs"] = self._sample_df_curator.non_validated  # type: ignore
             logger.print("")
@@ -281,11 +289,11 @@ class SpatialDataCurator:
         revises: Artifact | None = None,
         run: Run | None = None,
     ) -> Artifact:
-        """Save the validated ``MuData`` and metadata.
+        """Save the validated ``SpatialData`` and metadata.
 
         Args:
-            description: A description of the ``MuData`` object.
-            key: A path-like key to reference artifact in default storage, e.g., `"myfolder/myfile.fcs"`.
+            description: A description of the ``SpatialData`` object.
+            key: A path-like key to reference artifact in default storage, e.g., `"myfolder/myfile.zarr"`.
                 Artifacts with the same key form a revision family.
             revises: Previous version of the artifact. Triggers a revision.
             run: The run that creates the artifact.
@@ -302,15 +310,18 @@ class SpatialDataCurator:
         try:
             settings.verbosity = "warning"
 
+            # Write the SpatialData object to cache
+            # TODO This should not be a random number but be done in a canonical lamin way - ask Sergei for feedback
+            write_path = f"{settings.cache_dir}/{random.randint(10**7, 10**8 - 1)}.zarr"
+            self._sdata.write(write_path)
+
+            # Create the Artifact and associate Artifact metadata
             self._artifact = Artifact(
-                self._sdata,
+                write_path,
                 description=description,
-                columns_field=self._var_fields,
-                fields=self.categoricals,
                 key=key,
                 revises=revises,
                 run=run,
-                **self._kwargs,
             )
             # According to Tim it's not easy to calculate the number of observations.
             # We'd have to write custom code to iterate over labels (which might not even exist at that point)
@@ -335,7 +346,6 @@ class SpatialDataCurator:
                     obs_fields = {}
                 assert host._accessor == "spatialdata"
 
-                sdata = host.load()
                 feature_sets = {}
 
                 # sample features
@@ -346,7 +356,7 @@ class SpatialDataCurator:
                 # table features
                 for table, field in var_fields.items():
                     table_fs = parse_feature_sets_from_anndata(
-                        sdata[table],
+                        self._sdata[table],
                         var_field=field,
                         obs_field=obs_fields.get(table, Feature.name),
                         mute=mute,
