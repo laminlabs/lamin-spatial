@@ -1,4 +1,4 @@
-"""Manage Spatial data using LaminDB.
+"""Manage spatial data using LaminDB.
 
 Import the package::
 
@@ -7,3 +7,5 @@ Import the package::
 """
 
 __version__ = "0.1.0"  # denote a pre-release for 0.1.0 with 0.1rc1
+
+from spatialdata_curator import SpatialDataCurator
