@@ -8,6 +8,7 @@ from lamindb._curate import (
     AnnDataCurator,
     CurateLookup,
     DataFrameCurator,
+    _maybe_curation_keys_not_present,
     _ref_is_name,
     check_registry_organism,
     get_current_filter_kwargs,
@@ -16,7 +17,7 @@ from lamindb.core._data import add_labels
 from lamindb.core._feature_manager import parse_feature_sets_from_anndata
 from lamindb.core._settings import settings
 from lamindb.core.exceptions import ValidationError
-from lnschema_core import Artifact, Collection, Feature, FeatureSet, Record, Run
+from lnschema_core.models import Artifact, Collection, Feature, FeatureSet, Record, Run
 from lnschema_core.types import FieldAttr
 from spatialdata import SpatialData
 
@@ -97,6 +98,35 @@ class SpatialDataCurator:
         )  # this key will need to be adapted in the future
         self._validated = False
 
+        # Check validity of keys in categoricals
+        nonval_keys = []
+        for accessor, accessor_categoricals in self._categoricals.items():
+            if accessor == self._sample_metadata_key:
+                for key in accessor_categoricals.keys():
+                    if key not in self._sample_metadata.columns:
+                        nonval_keys.append(key)
+            else:
+                for key in accessor_categoricals.keys():
+                    if key not in self._sdata[accessor].obs.columns:
+                        nonval_keys.append(key)
+
+        _maybe_curation_keys_not_present(nonval_keys, "categoricals")
+
+        # check validity of keys in sources and exclude
+        for name, dct in (("sources", self._sources), ("exclude", self._exclude)):
+            nonval_keys = []
+            for accessor, accessor_sources in dct.items():
+                columns = (
+                    self._sample_metadata.columns
+                    if accessor == self._sample_metadata_key
+                    else self._sdata[accessor].obs.columns
+                )
+                for key in accessor_sources:
+                    if key not in columns:
+                        nonval_keys.append(key)
+            _maybe_curation_keys_not_present(nonval_keys, name)
+
+        # Set up sample level metadata and table Curator objects
         if self._sample_metadata_key in self._categoricals.keys():
             self._sample_df_curator = DataFrameCurator(
                 df=self._sample_metadata,

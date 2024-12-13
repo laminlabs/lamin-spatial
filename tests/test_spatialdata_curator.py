@@ -1,6 +1,7 @@
 import bionty as bt
 import lamindb as ln
 import pytest
+from lamindb.core.exceptions import ValidationError
 from spatialdata.datasets import blobs
 
 
@@ -26,6 +27,31 @@ def blobs_data():
 def test_spatialdata_curator(setup_instance, blobs_data):
     from lamin_spatial import SpatialDataCurator
 
+    with pytest.raises(
+        ValidationError, match="key passed to categoricals is not present"
+    ):
+        SpatialDataCurator(
+            blobs_data,
+            var_index={"table": bt.Gene.ensembl_gene_id},
+            categoricals={
+                "sample": {
+                    "does not exist": bt.ExperimentalFactor.name,
+                },
+            },
+            organism="human",
+        )
+
+    with pytest.raises(ValidationError, match="key passed to sources is not present"):
+        SpatialDataCurator(
+            blobs_data,
+            var_index={"table": bt.Gene.ensembl_gene_id},
+            categoricals={
+                "table": {"region": ln.ULabel.name},
+            },
+            sources={"sample": {"whatever": bt.CellLine.name}},
+            organism="human",
+        )
+
     curator = SpatialDataCurator(
         blobs_data,
         var_index={"table": bt.Gene.ensembl_gene_id},
@@ -44,6 +70,7 @@ def test_spatialdata_curator(setup_instance, blobs_data):
 
     curator.add_new_from_var_index("table")
     curator.add_new_from(key="developmental_stage", accessor="sample")
+    curator.add_new_from(key="region", accessor="table")
 
     curator.standardize(key="disease", accessor="sample")
 
