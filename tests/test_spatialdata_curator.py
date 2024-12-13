@@ -86,7 +86,7 @@ def test_spatialdata_curator(setup_instance, blobs_data):
     curator.add_new_from(key="region", accessor="table")
 
     # test invalid key in standardize
-    with pytest.raises(ValueError, match="key 'invalid_key' not present in 'table'"):
+    with pytest.raises(ValueError, match="key 'invalid_key' not present in 'table'!"):
         curator.standardize(key="invalid_key", accessor="table")
 
     # standardize
