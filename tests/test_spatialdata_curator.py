@@ -17,7 +17,7 @@ def blobs_data():
     sdata.attrs["sample"] = {
         "assay": "VisiumHD",
         "disease": "Alzheimer's dementia",
-        "preproc_version": "Space Ranger version 3.0.0",
+        "developmental_stage": "very early",
     }
 
     return sdata

@@ -29,13 +29,12 @@ class SpatialDataCurator:
     Note that if genes or other measurements are removed from the SpatialData object,
     the object should be recreated using :meth:`~lamindb.Curator.from_spatialdata`.
 
-    In the following docstring, an accessor refers to either a ``.table`` or the sample level metadata.
+    In the following docstring, an accessor refers to either a ``.table`` key or the sample metadata key.
 
     Args:
         sdata: The SpatialData object to curate.
         var_index: A dictionary mapping table keys to the ``.var`` indices.
         categoricals: A nested dictionary mapping an accessor to dictionaries that map columns to a registry field.
-            The key 'sample' must be used for sample level metadata that is stored in the Spatialdata object and not one of the tables.
         using_key: A reference LaminDB instance.
         verbosity: The verbosity level.
         organism: The organism name.
@@ -43,6 +42,7 @@ class SpatialDataCurator:
         exclude: A dictionary mapping an accessor to dictionaries of column names to values to exclude from validation.
             When specific :class:`~bionty.Source` instances are pinned and may lack default values (e.g., "unknown" or "na"),
             using the exclude parameter ensures they are not validated.
+        sample_metadata_key: The key in the attrs that stores the sample level metadata.
 
     Examples:
         >>> import bionty as bt
@@ -71,6 +71,8 @@ class SpatialDataCurator:
         organism: str | None = None,
         sources: dict[str, dict[str, Record]] | None = None,
         exclude: dict[str, dict] | None = None,
+        *,
+        sample_metadata_key: str = "sample",
     ) -> None:
         if sources is None:
             sources = {}
@@ -79,30 +81,31 @@ class SpatialDataCurator:
             exclude = {}
         self._exclude = exclude
         self._sdata = sdata
+        self._sample_metadata_key = sample_metadata_key
         self._kwargs = {"organism": organism} if organism else {}
         self._var_fields = var_index
         self._verify_accessor(self._var_fields.keys())
         self._categoricals = categoricals
         self._tables = set(self._var_fields.keys()) | set(
-            self._categoricals.keys() - {"sample"}
+            self._categoricals.keys() - {self._sample_metadata_key}
         )
         self._using_key = using_key
         self._verbosity = verbosity
         self._sample_df_curator = None
         self._sample_metadata = self._sdata.get_attrs(
-            key="sample", return_as="df", flatten=True
+            key=self._sample_metadata_key, return_as="df", flatten=True
         )  # this key will need to be adapted in the future
         self._validated = False
 
-        if "sample" in self._categoricals.keys():
+        if self._sample_metadata_key in self._categoricals.keys():
             self._sample_df_curator = DataFrameCurator(
                 df=self._sample_metadata,
                 columns=Feature.name,
-                categoricals=self._categoricals.get("sample", {}),
+                categoricals=self._categoricals.get(self._sample_metadata_key, {}),
                 using_key=using_key,
                 verbosity=verbosity,
-                sources=self._sources.get("sample"),
-                exclude=self._exclude.get("sample"),
+                sources=self._sources.get(self._sample_metadata_key),
+                exclude=self._exclude.get(self._sample_metadata_key),
                 check_valid_keys=False,
                 **self._kwargs,
             )
@@ -213,7 +216,7 @@ class SpatialDataCurator:
         if accessor in self._table_adata_curators:
             adata_curator = self._table_adata_curators[accessor]
             adata_curator.add_new_from(key=key, **self._kwargs, **kwargs)
-        if accessor == "sample":
+        if accessor == self._sample_metadata_key:
             self._sample_df_curator.add_new_from(key=key, **self._kwargs, **kwargs)
 
     def standardize(self, key: str, accessor: str | None = None):
@@ -228,7 +231,7 @@ class SpatialDataCurator:
         if accessor in self._table_adata_curators.keys():
             adata_curator = self._table_adata_curators[accessor]
             adata_curator.standardize(key=key)
-        if accessor == "sample":
+        if accessor == self._sample_metadata_key:
             self._sample_df_curator.standardize(key=key)
 
     def validate(self, organism: str | None = None) -> bool:
@@ -349,7 +352,9 @@ class SpatialDataCurator:
                 # sample features
                 sample_features = Feature.from_values(self._sample_metadata.columns)
                 if len(sample_features) > 0:
-                    feature_sets["sample"] = FeatureSet(features=sample_features)
+                    feature_sets[self._sample_metadata_key] = FeatureSet(
+                        features=sample_features
+                    )
 
                 # table features
                 for table, field in var_fields.items():
@@ -427,7 +432,7 @@ class SpatialDataCurator:
 
             for accessor, accessor_fields in self._categoricals.items():
                 column_field = self._var_fields.get(accessor)
-                if accessor == "sample":
+                if accessor == self._sample_metadata_key:
                     _add_labels_from_spatialdata(
                         self._sample_metadata,
                         self._artifact,
