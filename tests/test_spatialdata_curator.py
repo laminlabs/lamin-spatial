@@ -85,10 +85,14 @@ def test_spatialdata_curator(setup_instance, blobs_data):
     curator.add_new_from(key="developmental_stage", accessor="sample")
     curator.add_new_from(key="region", accessor="table")
 
+    # test invalid key in standardize
+    with pytest.raises(KeyError, match="key 'invalid_key' not present in 'table'"):
+        curator.standardize(key="invalid_key", accessor="table")
+
     curator.standardize(key="disease", accessor="sample")
     assert curator._sample_metadata["disease"].values[0] == "Alzheimer disease"
 
-    assert curator.validate()
+    assert curator.validate() is True
 
     artifact = curator.save_artifact(description="blob spatialdata")
 

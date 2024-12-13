@@ -263,11 +263,22 @@ class SpatialDataCurator:
 
         Inplace modification of the dataset.
         """
+        if len(self.non_validated) == 0:
+            logger.warning("values are already standardized")
+            return
+
+        if accessor == self._sample_metadata_key:
+            if key not in self._sample_metadata.columns:
+                raise ValueError(f"Key '{key}' not present in '{accessor}'!")
+        else:
+            if key not in self._sdata.tables[accessor].obs.columns:
+                raise ValueError(f"Key '{key}' not present in '{accessor}'!")
+
         if accessor in self._table_adata_curators.keys():
             adata_curator = self._table_adata_curators[accessor]
-            adata_curator.standardize(key=key)
+            adata_curator.standardize(key)
         if accessor == self._sample_metadata_key:
-            self._sample_df_curator.standardize(key=key)
+            self._sample_df_curator.standardize(key)
 
     def validate(self, organism: str | None = None) -> bool:
         """Validate variables and categorical observations.
