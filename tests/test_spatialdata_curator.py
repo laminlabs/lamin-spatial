@@ -85,9 +85,8 @@ def test_spatialdata_curator(setup_instance, blobs_data):
     curator.add_new_from(key="developmental_stage", accessor="sample")
     curator.add_new_from(key="region", accessor="table")
 
-    assert curator.non_validated == {}
-
     curator.standardize(key="disease", accessor="sample")
+    assert curator._sample_metadata["disease"].values[0] == "Alzheimer disease"
 
     assert curator.validate()
 
