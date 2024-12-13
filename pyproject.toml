@@ -35,7 +35,7 @@ testpaths = [
 ]
 filterwarnings = [
     "ignore:The dtype argument is deprecated and will be removed in late 2024.:FutureWarning",
-    "ignore:Converting `region_key: region` to categorical dtype.:UserWarning"
+    "ignore:Converting `region_key region` to categorical dtype.:UserWarning"
 ]
 
 [tool.ruff]
