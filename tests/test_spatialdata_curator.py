@@ -1,5 +1,6 @@
 import bionty as bt
 import lamindb as ln
+import pandas as pd
 import pytest
 from spatialdata.datasets import blobs
 
@@ -13,7 +14,9 @@ def blobs_data():
         "ENSG00000157764",  # BRAF
         "ENSG00000999999",  # does not exist - to test add_new_from_var_index
     ]
-    sdata.tables["table"].obs["region"] = ["region 1"] * 13 + ["region 2"] * 13
+    sdata.tables["table"].obs["region"] = pd.Categorical(
+        ["region 1"] * 13 + ["region 2"] * 13
+    )
     sdata.attrs["sample"] = {
         "assay": "VisiumHD",
         "disease": "Alzheimer's dementia",
