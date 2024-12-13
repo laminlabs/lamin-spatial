@@ -1,7 +1,6 @@
 import bionty as bt
 import lamindb as ln
 import pytest
-from lamin_spatial import SpatialDataCurator
 from spatialdata.datasets import blobs
 
 
@@ -25,6 +24,8 @@ def blobs_data():
 
 
 def test_spatialdata_curator(setup_instance, blobs_data):
+    from lamin_spatial import SpatialDataCurator
+
     curator = SpatialDataCurator(
         blobs_data,
         var_index={"table": bt.Gene.ensembl_gene_id},
