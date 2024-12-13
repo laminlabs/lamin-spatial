@@ -7,7 +7,7 @@ name = "lamin_spatial"
 authors = [{name = "Lamin Labs", email = "open-source@lamin.ai"}]
 readme = "README.md"
 dynamic = ["version", "description"]
-dependencies = ["spatialdata"]  # the Curator currently requires PR 806
+dependencies = ["spatialdata"]
 
 [project.urls]
 Home = "https://github.com/laminlabs/lamin-spatial"
@@ -32,6 +32,10 @@ use_case = [
 [tool.pytest.ini_options]
 testpaths = [
     "tests",
+]
+filterwarnings = [
+    "ignore:The dtype argument is deprecated and will be removed in late 2024.:FutureWarning",
+    "ignore:Converting `region_key: region` to categorical dtype.:UserWarning"
 ]
 
 [tool.ruff]

@@ -21,6 +21,10 @@ def lint(session: nox.Session) -> None:
 def build(session):
     install_lamindb(session, branch="release", extras="bionty,aws,gcp,jupyter")
     run(session, f"uv pip install {SYSTEM} .[dev,use_case]")
+    run(
+        session,
+        "uv pip install -U git+https://github.com/scverse/spatialdata.git@refs/pull/806/head",
+    )  # Required to access metadata attrs
     login_testuser1(session)
     run(session, "pytest -s tests")
     build_docs(session, strict=True)
