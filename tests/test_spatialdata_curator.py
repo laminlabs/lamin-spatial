@@ -1,7 +1,6 @@
 import bionty as bt
 import lamindb as ln
 import pytest
-from lamindb.core.exceptions import ValidationError
 from spatialdata.datasets import blobs
 
 
@@ -26,6 +25,7 @@ def blobs_data():
 
 def test_spatialdata_curator(setup_instance, blobs_data):
     from lamin_spatial import SpatialDataCurator
+    from lamindb.core.exceptions import ValidationError
 
     with pytest.raises(
         ValidationError, match="key passed to categoricals is not present"

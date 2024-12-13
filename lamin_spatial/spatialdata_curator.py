@@ -17,7 +17,7 @@ from lamindb.core._data import add_labels
 from lamindb.core._feature_manager import parse_feature_sets_from_anndata
 from lamindb.core._settings import settings
 from lamindb.core.exceptions import ValidationError
-from lnschema_core import Artifact, Collection, Feature, FeatureSet, Record, Run
+from lnschema_core.models import Artifact, Collection, Feature, FeatureSet, Record, Run
 from lnschema_core.types import FieldAttr
 from spatialdata import SpatialData
 
