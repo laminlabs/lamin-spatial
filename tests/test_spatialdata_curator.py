@@ -24,7 +24,7 @@ def blobs_data():
     return sdata
 
 
-def test_spatialdata_curator(blobs_data):
+def test_spatialdata_curator(setup_instance, blobs_data):
     curator = SpatialDataCurator(
         blobs_data,
         var_index={"table": bt.Gene.ensembl_gene_id},
