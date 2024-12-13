@@ -224,6 +224,10 @@ class SpatialDataCurator:
         self._table_adata_curators[table].add_new_from_var_index(
             **self._kwargs, **kwargs
         )
+        self._non_validated[table].pop("var_index")
+
+        if len(self.non_validated[table].values()) == 0:
+            self.non_validated.pop(table)
 
     def add_new_from(
         self,
