@@ -81,9 +81,7 @@ class SpatialDataCurator:
         self._sdata = sdata
         self._kwargs = {"organism": organism} if organism else {}
         self._var_fields = var_index
-        # TODO we should properly check for sample. This currently fails because we hard coded spatialdata-db as the attrs key
-        self._verify_accessor(self._var_fields.keys() - {"sample"})
-        # TODO consider splitting this up into two types of keys -> sap: for sample and tab: for table stuff
+        self._verify_accessor(self._var_fields.keys())
         self._categoricals = categoricals
         self._tables = set(self._var_fields.keys()) | set(
             self._categoricals.keys() - {"sample"}
@@ -92,7 +90,7 @@ class SpatialDataCurator:
         self._verbosity = verbosity
         self._sample_df_curator = None
         self._sample_metadata = self._sdata.get_attrs(
-            key="spatialdata-db", return_as="df", flatten=True
+            key="sample", return_as="df", flatten=True
         )  # this key will need to be adapted in the future
         self._validated = False
 
@@ -273,7 +271,7 @@ class SpatialDataCurator:
 
         mods_validated = True
         for table, adata_curator in self._table_adata_curators.items():
-            logger.info(f'validating categoricals in table "{table}"...')
+            logger.info(f"validating categoricals in table '{table}'...")
             mods_validated &= adata_curator.validate(**self._kwargs)
             if len(adata_curator.non_validated) > 0:
                 self._non_validated[table] = adata_curator.non_validated  # type: ignore

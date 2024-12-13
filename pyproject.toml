@@ -27,7 +27,6 @@ use_case = [
     "generate-tiff-offsets>=0.1.9",
     "starlette",
     "duckdb",
-    "s3fs>=2024.10.0"  # gets downgraded by vitessce/starlette but needs to be recent
 ]
 
 [tool.pytest.ini_options]
