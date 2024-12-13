@@ -69,13 +69,25 @@ def test_spatialdata_curator(setup_instance, blobs_data):
         organism="human",
     )
 
-    curator.validate()
+    with pytest.raises(ValidationError, match="Run .validate() first."):
+        curator.add_new_from(key="region", accessor="table")
+
+    with pytest.raises(
+        ValidationError, match="Dataset does not validate. Please curate."
+    ):
+        curator.save_artifact(description="test spatialdata curation")
+
+    assert not curator.validate()
 
     curator.add_new_from_var_index("table")
     curator.add_new_from(key="developmental_stage", accessor="sample")
     curator.add_new_from(key="region", accessor="table")
 
+    assert curator.non_validated == {}
+
     curator.standardize(key="disease", accessor="sample")
+
+    assert curator.validate()
 
     artifact = curator.save_artifact(description="blob spatialdata")
 
