@@ -193,11 +193,10 @@ class SpatialDataCurator:
             using_key: The instance where the lookup is performed.
                 if "public", the lookup is performed on the public reference.
         """
+        cat_values_dict = list(self.categoricals.values())[0]
         return CurateLookup(
-            categoricals=self.categoricals,
-            slots={
-                **{f"{k}_var_index": v for k, v in self._var_fields.items()},
-            },
+            categoricals=cat_values_dict,
+            slots={"accessors": cat_values_dict.keys()},
             using_key=using_key or self._using_key,
             public=public,
         )
@@ -280,6 +279,9 @@ class SpatialDataCurator:
         if accessor == self._sample_metadata_key:
             self._sample_df_curator.standardize(key)
 
+        if len(self.non_validated[accessor].values()) == 0:
+            self.non_validated.pop(accessor)
+
     def validate(self, organism: str | None = None) -> bool:
         """Validate variables and categorical observations.
 
@@ -311,11 +313,12 @@ class SpatialDataCurator:
 
         self._non_validated = {}  # type: ignore
 
-        obs_validated = True
+        sample_validated = True
         if self._sample_df_curator:
             logger.info("validating categoricals of 'sample' metadata...")
-            obs_validated &= self._sample_df_curator.validate(**self._kwargs)
-            self._non_validated["obs"] = self._sample_df_curator.non_validated  # type: ignore
+            sample_validated &= self._sample_df_curator.validate(**self._kwargs)
+            if len(self._sample_df_curator.non_validated) > 0:
+                self._non_validated["sample"] = self._sample_df_curator.non_validated  # type: ignore
             logger.print("")
 
         mods_validated = True
@@ -326,7 +329,7 @@ class SpatialDataCurator:
                 self._non_validated[table] = adata_curator.non_validated  # type: ignore
             logger.print("")
 
-        self._validated = obs_validated & mods_validated
+        self._validated = sample_validated & mods_validated
         return self._validated
 
     def save_artifact(
