@@ -113,6 +113,6 @@ def test_spatialdata_curator(setup_instance, blobs_data):
     bt.ExperimentalFactor.filter().delete()
     bt.Disease.filter().delete()
     bt.DevelopmentalStage.filter().delete()
-    bt.Gene.filter().delete()
     ln.FeatureSet.filter().delete()
+    bt.Gene.filter().delete()
     ln.Feature.filter().delete()
