@@ -20,7 +20,7 @@ def blobs_data():
         ["region 1"] * 13 + ["region 2"] * 13
     )
     sdata.attrs["sample"] = {
-        "assay": "VisiumHD",
+        "assay": "Visium Spatial Gene Expression",
         "disease": "Alzheimer's dementia",
         "developmental_stage": "very early",
     }
