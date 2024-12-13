@@ -1,3 +1,5 @@
+import re
+
 import bionty as bt
 import lamindb as ln
 import pandas as pd
@@ -69,11 +71,11 @@ def test_spatialdata_curator(setup_instance, blobs_data):
         organism="human",
     )
 
-    with pytest.raises(ValidationError, match="Run .validate() first."):
+    with pytest.raises(ValidationError, match=re.escape("Run .validate() first.")):
         curator.add_new_from(key="region", accessor="table")
 
     with pytest.raises(
-        ValidationError, match="Dataset does not validate. Please curate."
+        ValidationError, match=re.escape("Dataset does not validate. Please curate.")
     ):
         curator.save_artifact(description="test spatialdata curation")
 
