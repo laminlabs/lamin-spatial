@@ -257,6 +257,9 @@ class SpatialDataCurator:
         if accessor == self._sample_metadata_key:
             self._sample_df_curator.add_new_from(key=key, **self._kwargs, **kwargs)
 
+        if len(self.non_validated[accessor].values()) == 0:
+            self.non_validated.pop(accessor)
+
     def standardize(self, key: str, accessor: str | None = None):
         """Replace synonyms with standardized values.
 
