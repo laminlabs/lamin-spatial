@@ -219,6 +219,8 @@ class SpatialDataCurator:
             organism: The organism name.
             **kwargs: Additional keyword arguments to pass to create new records.
         """
+        if self._non_validated is None:
+            raise ValidationError("Run .validate() first.")
         self._kwargs.update({"organism": organism} if organism else {})
         self._table_adata_curators[table].add_new_from_var_index(
             **self._kwargs, **kwargs
@@ -239,6 +241,9 @@ class SpatialDataCurator:
             organism: The organism name.
             **kwargs: Additional keyword arguments to pass to create new records.
         """
+        if self._non_validated is None:
+            raise ValidationError("Run .validate() first.")
+
         if len(kwargs) > 0 and key == "all":
             raise ValueError("Cannot pass additional arguments to 'all' key!")
 
