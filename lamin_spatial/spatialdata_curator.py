@@ -268,10 +268,10 @@ class SpatialDataCurator:
 
         if accessor == self._sample_metadata_key:
             if key not in self._sample_metadata.columns:
-                raise ValueError(f"Key '{key}' not present in '{accessor}'!")
+                raise ValueError(f"key '{key}' not present in '{accessor}'!")
         else:
             if key not in self._sdata.tables[accessor].obs.columns:
-                raise ValueError(f"Key '{key}' not present in '{accessor}'!")
+                raise ValueError(f"key '{key}' not present in '{accessor}'!")
 
         if accessor in self._table_adata_curators.keys():
             adata_curator = self._table_adata_curators[accessor]
