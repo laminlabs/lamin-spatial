@@ -28,26 +28,27 @@ class SpatialDataCurator:
     See also :class:`~lamindb.Curator`.
 
     Note that if genes or other measurements are removed from the SpatialData object,
-    the object should be recreated using :meth:`~lamindb.Curator.from_spatialdata`.
+    the object should be recreated.
 
-    In the following docstring, an accessor refers to either a ``.table`` key or the sample metadata key.
+    In the following docstring, an accessor refers to either a ``.table`` key or the ``sample_metadata_key``.
 
     Args:
         sdata: The SpatialData object to curate.
         var_index: A dictionary mapping table keys to the ``.var`` indices.
         categoricals: A nested dictionary mapping an accessor to dictionaries that map columns to a registry field.
         using_key: A reference LaminDB instance.
-        verbosity: The verbosity level.
         organism: The organism name.
         sources: A dictionary mapping an accessor to dictionaries that map columns to Source records.
         exclude: A dictionary mapping an accessor to dictionaries of column names to values to exclude from validation.
             When specific :class:`~bionty.Source` instances are pinned and may lack default values (e.g., "unknown" or "na"),
             using the exclude parameter ensures they are not validated.
-        sample_metadata_key: The key in the attrs that stores the sample level metadata.
+        verbosity: The verbosity level of the logger.
+        sample_metadata_key: The key in ``.attrs`` that stores the sample level metadata.
 
     Examples:
+        >>> from lnschema_spatial import SpatialDataCurator
         >>> import bionty as bt
-        >>> curator = ln.Curator.from_spatialdata(
+        >>> curator = SpatialDataCurator(
         ...     sdata,
         ...     var_index={
         ...         "table_1": bt.Gene.ensembl_gene_id,
@@ -85,9 +86,9 @@ class SpatialDataCurator:
         self._sample_metadata_key = sample_metadata_key
         self._kwargs = {"organism": organism} if organism else {}
         self._var_fields = var_index
-        self._verify_accessor(self._var_fields.keys())
+        self._verify_accessor_exists(self._var_fields.keys())
         self._categoricals = categoricals
-        self._tables = set(self._var_fields.keys()) | set(
+        self._table_keys = set(self._var_fields.keys()) | set(
             self._categoricals.keys() - {self._sample_metadata_key}
         )
         self._using_key = using_key
@@ -95,7 +96,7 @@ class SpatialDataCurator:
         self._sample_df_curator = None
         self._sample_metadata = self._sdata.get_attrs(
             key=self._sample_metadata_key, return_as="df", flatten=True
-        )  # this key will need to be adapted in the future
+        )
         self._validated = False
 
         # Check validity of keys in categoricals
@@ -150,18 +151,19 @@ class SpatialDataCurator:
                 exclude=self._exclude.get(table),
                 **self._kwargs,
             )
-            for table in self._tables
+            for table in self._table_keys
         }
+
         self._non_validated = None
 
     @property
     def var_index(self) -> FieldAttr:
-        """Return the registry field to validate variables index against."""
+        """Return the registry fields to validate variables indices against."""
         return self._var_fields
 
     @property
     def categoricals(self) -> dict[str, dict[str, FieldAttr]]:
-        """Return the categoricals fields to validate against."""
+        """Return the categorical keys and fields to validate against."""
         return self._categoricals
 
     @property
@@ -171,8 +173,8 @@ class SpatialDataCurator:
             raise ValidationError("Please run validate() first!")
         return self._non_validated
 
-    def _verify_accessor(self, accessors: Iterable[str]):
-        """Verify that the accessors exist."""
+    def _verify_accessor_exists(self, accessors: Iterable[str]) -> None:
+        """Verify that the accessors exist (either a valid table or in attrs)."""
         for acc in accessors:
             is_present = False
             try:
@@ -182,16 +184,16 @@ class SpatialDataCurator:
                 if acc in self._sdata.tables.keys():
                     is_present = True
             if not is_present:
-                raise ValidationError(f"Accessor '{acc} does not exist!")
+                raise ValidationError(f"Accessor '{acc}' does not exist!")
 
     def lookup(
         self, using_key: str | None = None, public: bool = False
     ) -> CurateLookup:
-        """Lookup categories.
+        """Look up categories.
 
         Args:
             using_key: The instance where the lookup is performed.
-                if "public", the lookup is performed on the public reference.
+            public: Whether the lookup is performed on the public reference.
         """
         cat_values_dict = list(self.categoricals.values())[0]
         return CurateLookup(
@@ -201,8 +203,8 @@ class SpatialDataCurator:
             public=public,
         )
 
-    def _update_registry_all(self):
-        """Update all registries."""
+    def _update_registry_all(self) -> None:
+        """Saves labels of all features for sample and table metadata."""
         if self._sample_df_curator is not None:
             self._sample_df_curator._update_registry_all(
                 validated_only=True, **self._kwargs
@@ -210,8 +212,10 @@ class SpatialDataCurator:
         for _, adata_curator in self._table_adata_curators.items():
             adata_curator._update_registry_all(validated_only=True, **self._kwargs)
 
-    def add_new_from_var_index(self, table: str, organism: str | None = None, **kwargs):
-        """Update variable records.
+    def add_new_from_var_index(
+        self, table: str, organism: str | None = None, **kwargs
+    ) -> None:
+        """Save new values from ``.var.index`` of table.
 
         Args:
             table: The table key.
@@ -235,8 +239,8 @@ class SpatialDataCurator:
         accessor: str | None = None,
         organism: str | None = None,
         **kwargs,
-    ):
-        """Add validated & new categories.
+    ) -> None:
+        """Save new values of categorical from sample level metadata or table.
 
         Args:
             key: The key referencing the slot in the DataFrame.
@@ -260,12 +264,12 @@ class SpatialDataCurator:
         if len(self.non_validated[accessor].values()) == 0:
             self.non_validated.pop(accessor)
 
-    def standardize(self, key: str, accessor: str | None = None):
-        """Replace synonyms with standardized values.
+    def standardize(self, key: str, accessor: str | None = None) -> None:
+        """Replace synonyms with canonical values.
 
         Args:
-            key: The key referencing the slot in the `MuData`.
-            accessor: The accessor key such as 'sample' or 'table x'.
+            key: The key referencing the slot in the table or sample metadata.
+            accessor: The accessor key such as 'sample_key' or 'table_key'.
 
         Inplace modification of the dataset.
         """
@@ -322,7 +326,7 @@ class SpatialDataCurator:
 
         sample_validated = True
         if self._sample_df_curator:
-            logger.info("validating categoricals of 'sample' metadata...")
+            logger.info(f"validating categoricals of '{self._sample_metadata_key}' ...")
             sample_validated &= self._sample_df_curator.validate(**self._kwargs)
             if len(self._sample_df_curator.non_validated) > 0:
                 self._non_validated["sample"] = self._sample_df_curator.non_validated  # type: ignore
@@ -330,7 +334,7 @@ class SpatialDataCurator:
 
         mods_validated = True
         for table, adata_curator in self._table_adata_curators.items():
-            logger.info(f"validating categoricals in table '{table}'...")
+            logger.info(f"validating categoricals of table '{table}' ...")
             mods_validated &= adata_curator.validate(**self._kwargs)
             if len(adata_curator.non_validated) > 0:
                 self._non_validated[table] = adata_curator.non_validated  # type: ignore
@@ -346,7 +350,7 @@ class SpatialDataCurator:
         revises: Artifact | None = None,
         run: Run | None = None,
     ) -> Artifact:
-        """Save the validated ``SpatialData`` and metadata.
+        """Save the validated ``SpatialData`` object and metadata.
 
         Args:
             description: A description of the ``SpatialData`` object.
@@ -367,8 +371,8 @@ class SpatialDataCurator:
         try:
             settings.verbosity = "warning"
 
-            # Write the SpatialData object to cache
-            # TODO This should not be a random number but be done in a canonical lamin way - ask Sergei for feedback
+            # Write the SpatialData object to a random path in tmp directory
+            # The Artifact constructor will move it to the cache
             write_path = f"{settings.cache_dir}/{random.randint(10**7, 10**8 - 1)}.zarr"
             self._sdata.write(write_path)
 
@@ -380,8 +384,8 @@ class SpatialDataCurator:
                 revises=revises,
                 run=run,
             )
-            # According to Tim it's not easy to calculate the number of observations.
-            # We'd have to write custom code to iterate over labels (which might not even exist at that point)
+            # According to Tim it is not easy to calculate the number of observations.
+            # We would have to write custom code to iterate over labels (which might not even exist at that point)
             self._artifact._accessor = "spatialdata"
             self._artifact.save()
 
@@ -474,6 +478,7 @@ class SpatialDataCurator:
                     )
                     if len(labels) == 0:
                         continue
+
                     label_ref_is_name = None
                     if hasattr(registry, "_name_field"):
                         label_ref_is_name = field.field.name == registry._name_field
