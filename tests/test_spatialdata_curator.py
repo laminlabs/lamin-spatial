@@ -81,7 +81,7 @@ def test_spatialdata_curator(setup_instance, blobs_data):
 
     assert not curator.validate()
 
-    assert curator.non_validatead == {
+    assert curator.non_validated == {
         "sample": {
             "disease": ["Alzheimer's dementia"],
             "developmental_stage": ["very early"],
