@@ -7,7 +7,7 @@ name = "lamin_spatial"
 authors = [{name = "Lamin Labs", email = "open-source@lamin.ai"}]
 readme = "README.md"
 dynamic = ["version", "description"]
-dependencies = []
+dependencies = ["spatialdata"]
 
 [project.urls]
 Home = "https://github.com/laminlabs/lamin-spatial"
@@ -27,12 +27,18 @@ use_case = [
     "generate-tiff-offsets>=0.1.9",
     "starlette",
     "duckdb",
-    "s3fs>=2024.10.0"  # gets downgraded by vitessce/starlette but needs to be recent
 ]
 
 [tool.pytest.ini_options]
 testpaths = [
     "tests",
+]
+filterwarnings = [
+    "ignore:Jupyter is migrating its paths to use standard platformdirs:DeprecationWarning",
+    "ignore:The dtype argument is deprecated and will be removed in late 2024.:FutureWarning",
+    "ignore:datetime.datetime.utcnow() is deprecated and scheduled for removal:DeprecationWarning",
+    "ignore:pkg_resources is deprecated:DeprecationWarning",
+    "ignore:Deprecated call to `pkg_resources.declare_namespace:DeprecationWarning"
 ]
 
 [tool.ruff]

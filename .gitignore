@@ -120,3 +120,5 @@ docs/*.png
 *.ome.tiff
 *.zarr.zip
 test-rxrx/
+run-tests
+test.ipynb
