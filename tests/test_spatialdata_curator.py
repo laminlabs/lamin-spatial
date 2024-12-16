@@ -22,7 +22,7 @@ def blobs_data():
     sdata.attrs["sample"] = {
         "assay": "Visium Spatial Gene Expression",
         "disease": "Alzheimer's dementia",
-        "developmental_stage": "very early",
+        "developmental_stage": "very early",  # does not exist - to test add_new_from
     }
 
     return sdata
@@ -81,9 +81,28 @@ def test_spatialdata_curator(setup_instance, blobs_data):
 
     assert not curator.validate()
 
+    assert curator.non_validatead == {
+        "sample": {
+            "disease": ["Alzheimer's dementia"],
+            "developmental_stage": ["very early"],
+        },
+        "table": {"region": ["region 1", "region 2"], "var_index": ["ENSG00000999999"]},
+    }
+
     curator.add_new_from_var_index("table")
+
+    assert curator.non_validated == {
+        "sample": {
+            "disease": ["Alzheimer's dementia"],
+            "developmental_stage": ["very early"],
+        },
+        "table": {"region": ["region 1", "region 2"]},
+    }
+
     curator.add_new_from(key="developmental_stage", accessor="sample")
     curator.add_new_from(key="region", accessor="table")
+
+    assert curator.non_validated == {"sample": {"disease": ["Alzheimer's dementia"]}}
 
     # test invalid key in standardize
     with pytest.raises(ValueError, match="key 'invalid_key' not present in 'table'!"):
@@ -95,7 +114,7 @@ def test_spatialdata_curator(setup_instance, blobs_data):
     assert curator._sample_metadata["disease"].values[0] == "Alzheimer disease"
     assert curator.non_validated == {}
 
-    # validation should also pass
+    # validation should finally pass
     assert curator.validate() is True
 
     # lookup
