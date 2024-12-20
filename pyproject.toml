@@ -7,7 +7,7 @@ name = "lamin_spatial"
 authors = [{name = "Lamin Labs", email = "open-source@lamin.ai"}]
 readme = "README.md"
 dynamic = ["version", "description"]
-dependencies = ["spatialdata"]
+dependencies = []
 
 [project.urls]
 Home = "https://github.com/laminlabs/lamin-spatial"
