@@ -122,3 +122,4 @@ docs/*.png
 test-rxrx/
 run-tests
 test.ipynb
+.ruff_cache
