@@ -19,7 +19,8 @@ def lint(session: nox.Session) -> None:
 
 @nox.session
 def build(session):
-    install_lamindb(session, branch="main", extras="bionty,gcp,jupyter,zarr")
+    # do not use zarr extra here otherwise spatialdata won't be installed
+    install_lamindb(session, branch="main", extras="bionty,gcp,jupyter")
     run(session, f"uv pip install {SYSTEM} .[dev,use_case]")
     login_testuser1(session)
     run(session, "pytest -s tests")
