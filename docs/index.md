@@ -7,7 +7,6 @@
 :maxdepth: 1
 :hidden:
 
-rxrx
 vitessce
 notebooks
 changelog
