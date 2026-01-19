@@ -7,8 +7,9 @@
 :maxdepth: 1
 :hidden:
 
-rxrx
 vitessce
+vitessce2
 notebooks
 changelog
+rxrx
 ```
