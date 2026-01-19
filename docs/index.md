@@ -9,7 +9,5 @@
 
 vitessce
 vitessce2
-notebooks
 changelog
-rxrx
 ```
