@@ -4,5 +4,6 @@
 :maxdepth: 1
 :glob:
 
+notebooks/*
 static/*
 ```

@@ -9,6 +9,7 @@
 
 vitessce
 vitessce2
+rxrx
 notebooks
 changelog
 ```
