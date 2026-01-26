@@ -21,7 +21,7 @@ dev = [
     "nbproject_test",
 ]
 use_case = [
-    "wetlab",
+    "pertdb",
     "vitessce[all]>=3.5.0",
     "generate-tiff-offsets>=0.1.9",
     "starlette",
