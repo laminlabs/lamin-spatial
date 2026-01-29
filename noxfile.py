@@ -1,5 +1,5 @@
 import nox
-from laminci import upload_docs_artifact
+from laminci import convert_executable_md_files, upload_docs_artifact
 from laminci.nox import (
     SYSTEM,
     build_docs,
@@ -20,6 +20,7 @@ def lint(session: nox.Session) -> None:
 @nox.session
 def build(session):
     install_lamindb(session, branch="main", extras="gcp,zarr_v2")
+    convert_executable_md_files()
     run(session, f"uv pip install {SYSTEM} .[dev,use_case]")
     # vitessce requires zarr<3, and therefore upper limits spatialdata<0.5.0
     run(session, f"uv pip install {SYSTEM} spatialdata<=0.5.0")
