@@ -4,7 +4,8 @@ execute_via: python
 
 # Vitessce: AnnData
 
-This tutorial demonstrates how to use Vitessce to create interactive visualizations for data stored as LaminDB artifacts. It requires a remote LaminDB instance with cloud storage to enable the Vitessce button (shown below) in the web interface.
+This tutorial demonstrates how to use Vitessce to create interactive visualizations for data stored as LaminDB artifacts.
+It requires a remote LaminDB instance with cloud storage to enable the Vitessce button (shown below) in the web interface.
 
 <img src="https://lamin-site-assets.s3.amazonaws.com/.lamindb/tIUr8SDgC0svqXW60001.png" width="700px">
 

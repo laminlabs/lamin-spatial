@@ -4,7 +4,8 @@ execute_via: python
 
 # Vitessce: SpatialData
 
-This tutorial demonstrates how to create interactive Vitessce visualizations for SpatialData objects stored as LaminDB artifacts. It requires a remote LaminDB instance with cloud storage to enable the Vitessce button (shown below) in the web interface.
+This tutorial demonstrates how to create interactive Vitessce visualizations for SpatialData objects stored as LaminDB artifacts.
+It requires a remote LaminDB instance with cloud storage to enable the Vitessce button (shown below) in the web interface.
 
 <img src="https://lamin-site-assets.s3.amazonaws.com/.lamindb/dImlJuvjfOhsGD9F0000.png" width="700px">
 
