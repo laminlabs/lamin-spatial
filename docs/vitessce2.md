@@ -13,7 +13,7 @@ For visualizing AnnData objects, see the [Vitessce: AnnData](https://docs.lamin.
 We'll work with spatial transcriptomics data in Zarr, OME-TIFF, and OME-Zarr formats.
 
 ```python
-# pip install "vitessce[all]>=3.5.0" "generate-tiff-offsets>=0.1.9" lamindb
+# pip install 'vitessce[all]>=3.5.0' lamindb
 !lamin connect laminlabs/lamindata  # <-- replace with your remote instance
 ```
 
