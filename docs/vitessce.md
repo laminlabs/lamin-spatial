@@ -28,7 +28,7 @@ ln.track()
 ## Visualize an AnnData object (H5AD format)
 
 Here we use the Habib et al. 2017 dataset from the [COVID-19 Cell Atlas](https://www.covid19cellatlas.org/index.healthy.html#habib17) that has been previously subset to highly variable genes.
-It was ingested into the public [laminlabs/lamindata](https://lamin.ai/laminlabs/lamindata) instance in this [transform](https://lamin.ai/laminlabs/lamindata/transform/HuFKHbJ5DxKt).
+The dataset was ingested into the public [laminlabs/lamindata](https://lamin.ai/laminlabs/lamindata) instance in this [transform](https://lamin.ai/laminlabs/lamindata/transform/HuFKHbJ5DxKt).
 
 ```python
 h5ad_artifact = ln.Artifact.get(key="vitessce_examples/habib17.h5ad")
@@ -87,9 +87,9 @@ h5ad_vc_artifact = ln.integrations.save_vitessce_config(
 
 After running `save_vitessce_config`, a Vitessce button will appear next to the dataset on the [Artifacts](https://lamin.ai/laminlabs/lamindata/artifacts) or [Collections](https://lamin.ai/laminlabs/lamindata/collections) page of the web interface.
 
-If your `VitessceConfig` object references data from multiple artifacts, the Vitessce button will appear next to a `Collection` that groups these artifacts (on the [Collections](https://lamin.ai/laminlabs/lamindata/collections) tab of the Artifacts page).
+If your `VitessceConfig` object references data from multiple artifacts, the Vitessce button will appear next to a collection that groups these artifacts (on the [Collections](https://lamin.ai/laminlabs/lamindata/collections) tab of the Artifacts page).
 
-Note that when using an `.h5ad`-based artifact, the presence of the corresponding `.reference.json` file will result in the creation of a Collection.
+Note that when using an `.h5ad`-based artifact, the presence of the corresponding `.reference.json` file will result in the creation of a collection.
 
 :::
 
@@ -99,7 +99,7 @@ The Vitessce button for this dataset is available on the [Collection](https://la
 
 AnnData objects can be saved on-disk to not only `.h5ad` files, but also to [Zarr stores](https://zarr.readthedocs.io/en/stable/tutorial.html#storage-alternatives) using AnnData's [write_zarr](https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.write_zarr.html) method.
 
-Just like in the above section, we use a zarr storage that has been previously written with `write_zarr()` and subset to highly variable genes and ingested into the `vitessce/examples` instance.
+Just like in the above section, we use a Zarr storage that has been previously written with `write_zarr()` and subset to highly variable genes and ingested into the public [laminlabs/lamindata](https://lamin.ai/laminlabs/lamindata) instance in this [transform](https://lamin.ai/laminlabs/lamindata/transform/HuFKHbJ5DxKt).
 
 ```python
 adata_zarr_artifact = ln.Artifact.get(key="vitessce_examples/habib17.adata.zarr")
@@ -154,11 +154,11 @@ If your `VitessceConfig` object references data from multiple artifacts, the Vit
 
 :::
 
-Clicking the Vitessce button for this [Artifact](https://lamin.ai/laminlabs/lamindata/artifact/Ljx9cSOxELkGisVt) (`.zarr`-based) or [Collection](#visualize-an-anndata-object-h5ad-format) (`.h5ad`-based) launches the same interactive viewer, as both formats represent the same dataset here:
+Clicking the Vitessce button for this `.zarr`-based [artifact](https://lamin.ai/laminlabs/lamindata/artifact/Ljx9cSOxELkGisVt) or `.h5ad`-based [collection](#visualize-an-anndata-object-h5ad-format) launches the same interactive viewer, as both formats represent the same dataset:
 
 <img src="https://lamin-site-assets.s3.amazonaws.com/.lamindb/6bYCczExolBzBiQH0002.png" width="900px">
 
-```python
+```python tags=["hide-cell"]
 # compare the generated vitessce config to the public one on vitessce/examples (H5AD)
 db = ln.DB("vitessce/examples")
 public_vc_json = db.Artifact.get("ffUKrGJGNHL3TDhG0000").load()
