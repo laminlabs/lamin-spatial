@@ -19,7 +19,7 @@ def lint(session: nox.Session) -> None:
 
 @nox.session
 def build(session):
-    install_lamindb(session, branch="main", extras="gcp,zarr_v2")
+    install_lamindb(session, branch="main", extras="full,gcp,zarr_v2")
     convert_executable_md_files()
     run(session, f"uv pip install {SYSTEM} .[dev,use_case]")
     # vitessce requires zarr<3, and therefore upper limits spatialdata<0.5.0
