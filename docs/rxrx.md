@@ -9,7 +9,7 @@ execute_via: python
 High numbers of fluorescent microscopy images characterize cellular phenotypes in vitro based on morphology and protein expression (5-10 stains) across a range of conditions.
 
 In this guide, you'll see how to query some of these data using LaminDB.
-If you'd like to sync data into your own LaminDB instance, see the [sync guide](inv:docs#sync).
+If you'd like to sync data into your own LaminDB instance, see the [transfer guide](inv:docs#transfer).
 
 ```python
 # !pip install 'lamindb[gcp]' duckdb
