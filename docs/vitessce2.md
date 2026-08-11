@@ -15,7 +15,7 @@ We'll work with spatial transcriptomics data in Zarr, OME-TIFF, and OME-Zarr for
 
 ```bash
 # pip install 'vitessce[all]>=3.5.0' lamindb
-lamin connect laminlabs/lamindata  # <-- replace with your remote instance
+lamin connect laminlabs/lamindata  # <-- replace with your database
 ```
 
 ```python

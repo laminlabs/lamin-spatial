@@ -12,7 +12,7 @@ In this guide, you'll see how to query some of these data using LaminDB.
 If you'd like to sync data into your own LaminDB instance, see the [transfer guide](inv:docs#transfer).
 
 ```bash
-# !pip install 'lamindb[gcp]' duckdb
+# pip install 'lamindb[gcp]' duckdb
 lamin init --modules bionty,pertdb --storage ./test-rxrx
 ```
 

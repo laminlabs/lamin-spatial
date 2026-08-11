@@ -15,7 +15,7 @@ In this part, we'll visualize an AnnData object stored in both H5AD and Zarr for
 
 ```bash
 # pip install 'vitessce[all]>=3.5.0' lamindb
-lamin connect laminlabs/lamindata # <-- replace with your remote instance
+lamin connect laminlabs/lamindata # <-- replace with your database
 ```
 
 ```python
