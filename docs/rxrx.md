@@ -121,6 +121,8 @@ As an alternative to pandas, we could use DuckDB to query image metadata.
 ```python
 import duckdb
 
+duckdb.sql("SET s3_region = 'us-east-1'")
+
 features = db.Feature.lookup(return_field="name")
 
 filter = (
@@ -128,9 +130,7 @@ filter = (
     f"{features.plate} == '1' and {features.site} == '2'"
 )
 
-parquet_data = duckdb.from_parquet(
-    collection.meta_artifact.path.as_posix() + "?s3_region=us-east-1"
-)
+parquet_data = duckdb.from_parquet(collection.meta_artifact.path.as_posix())
 
 parquet_data.filter(filter)
 ```
